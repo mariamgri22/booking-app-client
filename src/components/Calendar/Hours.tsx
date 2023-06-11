@@ -1,20 +1,17 @@
 import { useSelector } from "react-redux";
-import {
-  selectAvailableHours,
-  selectSelectedHour,
-} from "../../feature/calendarSlice";
 import { useNavigate } from "react-router-dom";
 import { setSelectedHour } from "../../feature/calendarSlice";
 
 import "./hours.css";
 import { useDispatch } from "react-redux";
+import { RootState } from "../../store";
 
 export const Hours = () => {
-  const availableHours = useSelector(selectAvailableHours);
+  const { availableHours, selectedHour } = useSelector(
+    (state: RootState) => state.calendar
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const selectedHour = useSelector(selectSelectedHour);
 
   const handleHourClick = (hour: string) => {
     dispatch(setSelectedHour(hour));

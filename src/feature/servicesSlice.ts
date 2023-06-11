@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apiWithoutAuth } from "../apiWithoutAuth";
+import { saveToLocalStorage } from "../helpers/localStorageHelper";
 
 export interface Service {
   id: number;
@@ -47,11 +48,14 @@ const servicesSlice = createSlice({
         state.selectedServices = state.selectedServices.filter(
           (id) => id !== serviceId
         );
+        saveToLocalStorage("selectedServices", state.selectedServices);
       } else {
         state.count += 1;
         state.selectedServices = [...state.selectedServices, serviceId];
+        saveToLocalStorage("selectedServices", state.selectedServices);
       }
     },
+  
   },
   extraReducers: (builder) => {
     builder
@@ -70,6 +74,7 @@ const servicesSlice = createSlice({
 });
 
 export { fetchServices };
-export const { toggleServiceSelectionStore } = servicesSlice.actions;
+export const { toggleServiceSelectionStore } =
+  servicesSlice.actions;
 
 export default servicesSlice.reducer;

@@ -14,8 +14,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-const apiWithoutAuth = axios.create({
-  baseURL: "http://localhost:5000",
-});
 
-export { api, apiWithoutAuth };
+
+export { api };

@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./../store";
-
 import { apiWithoutAuth } from "../apiWithoutAuth";
+import { saveToLocalStorage } from "../helpers/localStorageHelper";
 
 interface AvailableHoursResponse {
   availableHours: string[][];
@@ -33,7 +32,7 @@ const initialState: CalendarState = {
   status: "idle",
   error: null,
   selectedHour: null,
-  selectedDay:  null,
+  selectedDay: null,
   currentDay: new Date().toISOString().split("T")[0],
 };
 
@@ -43,9 +42,11 @@ const calendarSlice = createSlice({
   reducers: {
     setSelectedHour: (state, action: PayloadAction<string | null>) => {
       state.selectedHour = action.payload;
+      saveToLocalStorage("selectedHour", action.payload);
     },
-    setSelectedDay: (state, action: PayloadAction<Date>) => {
+    setSelectedDay: (state, action: PayloadAction<string>) => {
       state.selectedDay = action.payload;
+      saveToLocalStorage("selectedDay", state.selectedDay);
     },
   },
   extraReducers: (builder) => {
@@ -63,18 +64,6 @@ const calendarSlice = createSlice({
       });
   },
 });
-
-export const selectAvailableHours = (state: RootState) =>
-  state.calendar.availableHours;
-export const selectStatus = (state: RootState) => state.calendar.status;
-export const selectError = (state: RootState) => state.calendar.error;
-export const selectSelectedDay = (state: RootState) =>
-  state.calendar.selectedDay;
-export const selectCurrentedDay = (state: RootState) =>
-  state.calendar.currentDay;
-
-export const selectSelectedHour = (state: RootState) =>
-  state.calendar.selectedHour;
 
 export { fetchAvailableHours };
 export const { setSelectedHour, setSelectedDay } = calendarSlice.actions;

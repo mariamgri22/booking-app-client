@@ -4,6 +4,7 @@ import { RootState } from "../../store";
 import {
   fetchServices,
   Service,
+
   toggleServiceSelectionStore,
 } from "../../feature/servicesSlice";
 import { useNavigate } from "react-router-dom";
@@ -17,12 +18,10 @@ interface ServicesProps {
 }
 
 export const Services: React.FC<ServicesProps> = ({ searchQuery }) => {
-  const services = useSelector((state: RootState) => state.services.services);
-
-  const count = useSelector((state: RootState) => state.services.count);
-  const selectedServices = useSelector(
-    (state: RootState) => state.services.selectedServices
+  const { services, count, selectedServices } = useSelector(
+    (state: RootState) => state.services
   );
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

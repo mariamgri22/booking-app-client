@@ -4,34 +4,35 @@ import { CalendarProps } from "../../types/CalendarProps";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAvailableHours,
-  selectCurrentedDay,
-  selectError,
-  selectSelectedDay,
-  selectStatus,
   setSelectedDay,
+  setSelectedHour,
 } from "../../feature/calendarSlice";
 import renderCalendarDays from "../../helpers/calendarHelper";
 import { Hours } from "./Hours";
+import { RootState } from "../../store";
 
 const Calendar: React.FC<CalendarProps> = ({ startDate, numWeeks }) => {
   const dispatch = useDispatch();
 
-  const selectedDay = useSelector(selectSelectedDay);
-  const currentDay = useSelector(selectCurrentedDay);
-  const status = useSelector(selectStatus);
-  const error = useSelector(selectError);
+  const {selectedDay,currentDay, status, error} = useSelector((state: RootState) =>state.calendar);
+
 
   const handleDayClick = async (date: Date) => {
-    const formattedDate = date.toISOString().split("T")[0]; 
-    dispatch(setSelectedDay(formattedDate)); 
+    const formattedDate = date.toISOString().split("T")[0];
+    dispatch(setSelectedDay(formattedDate));
     dispatch(fetchAvailableHours(formattedDate));
+    dispatch(setSelectedHour(null));
   };
-  
 
   useEffect(() => {
     const formattedDate = currentDay;
     dispatch(fetchAvailableHours(formattedDate));
+    dispatch(setSelectedHour(null));
   }, [currentDay, dispatch]);
+
+  useEffect(() => {
+    localStorage.setItem("currentDay", currentDay);
+  }, [currentDay]);
 
   return (
     <>
@@ -61,4 +62,3 @@ const Calendar: React.FC<CalendarProps> = ({ startDate, numWeeks }) => {
 };
 
 export default Calendar;
-
