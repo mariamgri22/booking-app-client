@@ -25,7 +25,8 @@ export interface ServicesState {
   services: Service[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
-  selectedServices: number[];
+  selectedServices: [];
+  selectedServicesArray: Service[];
   count: number;
 }
 
@@ -34,6 +35,8 @@ const initialState: ServicesState = {
   status: "idle",
   error: null,
   selectedServices: [],
+  selectedServicesArray: [],
+
   count: 0,
 };
 
@@ -43,19 +46,27 @@ const servicesSlice = createSlice({
   reducers: {
     toggleServiceSelectionStore: (state, action) => {
       const serviceId = action.payload;
-      if (state.selectedServices.includes(serviceId)) {
+      const selectedServiceIndex = state.selectedServices.indexOf(serviceId);
+
+      if (selectedServiceIndex !== -1) {
         state.count -= 1;
-        state.selectedServices = state.selectedServices.filter(
-          (id) => id !== serviceId
+        state.selectedServices.splice(selectedServiceIndex, 1);
+        state.selectedServicesArray = state.selectedServicesArray.filter(
+          (service) => service.id !== serviceId
         );
-        saveToLocalStorage("selectedServices", state.selectedServices);
+        saveToLocalStorage("selectedServices", state.selectedServicesArray);
       } else {
-        state.count += 1;
-        state.selectedServices = [...state.selectedServices, serviceId];
-        saveToLocalStorage("selectedServices", state.selectedServices);
+        const service = state.services.find(
+          (service) => service.id === serviceId
+        );
+        if (service) {
+          state.count += 1;
+          state.selectedServices.push(serviceId);
+          state.selectedServicesArray.push(service);
+          saveToLocalStorage("selectedServices", state.selectedServicesArray);
+        }
       }
     },
-  
   },
   extraReducers: (builder) => {
     builder
@@ -74,7 +85,6 @@ const servicesSlice = createSlice({
 });
 
 export { fetchServices };
-export const { toggleServiceSelectionStore } =
-  servicesSlice.actions;
+export const { toggleServiceSelectionStore } = servicesSlice.actions;
 
 export default servicesSlice.reducer;

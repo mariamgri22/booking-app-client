@@ -1,6 +1,8 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { createUser } from "../../feature/usersSlice";
 
 interface FormValues {
   username: string;
@@ -13,6 +15,7 @@ interface FormValues {
 }
 
 const RegisterForm: React.FC = () => {
+  const dispatch = useDispatch();
   const initialValues: FormValues = {
     username: "",
     telephone: "+374",
@@ -33,7 +36,7 @@ const RegisterForm: React.FC = () => {
       .email("Invalid email address")
       .required("Email is required"),
     password: Yup.string()
-      .min(4, "Password must be at least 4 characters")
+      .min(6, "Password must be at least 4 characters")
       .max(32, "Password must not exceed 32 characters")
       .required("Password is required"),
     confirmPassword: Yup.string()
@@ -49,35 +52,17 @@ const RegisterForm: React.FC = () => {
     { label: "Option 3", value: "option3" },
   ];
 
-  // const formik = useFormik({
-  //   initialValues: {
-  //     username: "",
-  //     telephone: "",
-  //     email: "",
-  //     password: "",
-  //     confirmPassword: "",
-  //     comment: "",
-  //   },
-  //   onSubmit: (values) => {
-  //     const formData = new FormData();
-  //     formData.append("username", values.username);
-  //     formData.append("telephone", values.telephone);
-  //     formData.append("email", values.email);
-  //     formData.append("password", values.password);
-  //     formData.append("confirmPassword", values.confirmPassword);
-  //     formData.append("comment", values.comment);
+  const onSubmit = (values, { setSubmitting }) => {
+    dispatch(createUser(values));
 
-  //     createUser(formData);
-  //   },
-  //   validationSchema: validationSchema,
-  // });
-
+    setSubmitting(false);
+  };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      // onSubmit={onSubmit}
+      onSubmit={onSubmit}
     >
       {({ isSubmitting }) => (
         <Form>

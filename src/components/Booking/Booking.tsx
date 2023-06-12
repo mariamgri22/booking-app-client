@@ -1,19 +1,18 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchBookingById,
-  selectBookingData,
-  selectBookingLoading,
-} from "../../feature/bookingSlice";
+import { useSelector } from "react-redux";
+
 import { RootState } from "../../store";
 import { nanoid } from "@reduxjs/toolkit";
 import { getFromLocalStorage } from "../../helpers/localStorageHelper";
 import RegisterForm from "./RegisterForm";
+import { useNavigate } from "react-router-dom";
+import { PriceCalculator } from "./PriceCalucator";
+import api from "../../token";
 
 export const Booking = () => {
-  const { selectedServices } =
+  const { selectedServicesArray } =
     useSelector((state: RootState) => state.services) ||
     getFromLocalStorage("selectedServices");
+
   const currentDay =
     useSelector((state: RootState) => state.calendar.currentDay) ||
     getFromLocalStorage("currentDay");
@@ -25,39 +24,60 @@ export const Booking = () => {
     useSelector((state: RootState) => state.calendar.selectedHour) ||
     getFromLocalStorage("selectedHour");
 
-  const dispatch = useDispatch();
-  const bookingData = useSelector(selectBookingData);
+  const navigate = useNavigate();
 
-  const loading = useSelector(selectBookingLoading);
-
-  useEffect(() => {
-    selectedServices.forEach((serviceId) => {
-      if (!bookingData.find((data) => data.id === serviceId)) {   //!fix me
-        dispatch(fetchBookingById(serviceId));
-      }
-    });
-  }, [dispatch, selectedServices, bookingData]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  //TODO update local storage booking data
+  const handleClickNavigate = () => {
+    navigate("/services");
+  };
 
   const displayDay = selectedDay || currentDay;
+
+  const handleClickBook = async ({description, price, duration}) => {
+    try {
+      const response = await api.post("/createService", {
+        description: description,
+        price: price,
+        duration: duration,
+        day: selectedDay,
+      });
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+// I am here 
   return (
     <div>
+      <button onClick={handleClickNavigate}>arrow</button>
       <span>{displayDay}</span>
       <span>{selectedHour}</span>
-      {bookingData.map(({ description, category, price, duration }) => (
-        <div key={nanoid()}>
-          <span> {description} </span>
-          <span>{category} </span>
-          <span>{price} AMD </span>
-          <span>{duration} hour (s)</span>
-        </div>
-      ))}
-      <RegisterForm/>
+      {selectedServicesArray.map(
+        ({ description, category, price, duration }) => (
+          <>
+            <div key={nanoid()}>
+              <span> {description} </span>
+              <span>{category} </span>
+              <span>{price} AMD </span>
+              <span>{duration} hour (s)</span>
+            </div>
+            <button key={nanoid()}
+              onClick={() =>
+                handleClickBook({
+                  description,
+                  price,
+                  duration,
+                  day: selectedDay,
+                })
+              }
+            >
+              Book
+            </button>
+          </>
+        )
+      )}
+      <PriceCalculator />
+      <RegisterForm />
     </div>
   );
 };
