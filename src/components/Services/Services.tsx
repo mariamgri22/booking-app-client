@@ -1,10 +1,9 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import {
   fetchServices,
   Service,
-
   toggleServiceSelectionStore,
 } from "../../feature/servicesSlice";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +11,7 @@ import { Link } from "react-scroll";
 import { categoryToId } from "../../helpers/categoryToId";
 import { groupServicesByCategoryHelper } from "../../helpers/groupServicesByCategoryHelper";
 import { filterServicesHelper } from "../../helpers/filterServicesHelper";
+import { SingleService } from "./SingleService";
 
 interface ServicesProps {
   searchQuery: string;
@@ -22,8 +22,7 @@ export const Services: React.FC<ServicesProps> = ({ searchQuery }) => {
     (state: RootState) => state.services
   );
 
-
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const categoryRefs = useRef<React.RefObject<HTMLDivElement>[]>([]);
 
@@ -77,26 +76,12 @@ export const Services: React.FC<ServicesProps> = ({ searchQuery }) => {
             <h1 id={categoryToId(category)}>{category}</h1>
             <div>
               {services.map((service: Service) => (
-                <div
+                <SingleService
                   key={service.id}
-                  className={`service-item ${
-                    isServiceSelected(service.id) ? "selected" : ""
-                  }`}
-                  onClick={() => toggleServiceSelection(service.id)}
-                >
-                  <div className="service-info">
-                    <div className="service-description">
-                      Description: {service.description}
-                    </div>
-                    <div className="service-duration">
-                      Duration: {service.duration} hour(s)
-                    </div>
-                    <div className="service-price">Price: ${service.price}</div>
-                  </div>
-                  <button className="service-toggle">
-                    {isServiceSelected(service.id) ? "-" : "+"}
-                  </button>
-                </div>
+                  {...service}
+                  isServiceSelected={isServiceSelected}
+                  toggleServiceSelection={toggleServiceSelection}
+                />
               ))}
             </div>
           </div>

@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import calendarReducer from "../feature/calendarSlice";
 import servicesSlice from "../feature/servicesSlice";
+import usersSlice from "../feature/usersSlice";
 
 const store = configureStore({
   reducer: {
     calendar: calendarReducer,
     services: servicesSlice,
+    user: usersSlice,
   },
 });
 

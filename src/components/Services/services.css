@@ -31,3 +31,13 @@ li {
   font-weight: bold;
   margin-top: 5px;
 }
+
+.service-item.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.service-item {
+  cursor: pointer;
+}

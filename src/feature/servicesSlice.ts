@@ -36,7 +36,6 @@ const initialState: ServicesState = {
   error: null,
   selectedServices: [],
   selectedServicesArray: [],
-
   count: 0,
 };
 

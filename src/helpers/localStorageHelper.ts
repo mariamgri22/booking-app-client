@@ -7,10 +7,3 @@ export const getFromLocalStorage = (key: string) => {
   return data ? JSON.parse(data) : null;
 };
 
-export const removeFromLocalStorage = (key:string) => {
-  try {
-    localStorage.removeItem(key);
-  } catch (error) {
-    console.error("Error", error);
-  }
-};

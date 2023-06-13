@@ -1,28 +1,54 @@
 import { useSelector } from "react-redux";
-
-import { RootState } from "../../store";
-import { nanoid } from "@reduxjs/toolkit";
+import { useState, useEffect } from "react";
+import { AppDispatch, RootState } from "../../store";
 import { getFromLocalStorage } from "../../helpers/localStorageHelper";
 import RegisterForm from "./RegisterForm";
 import { useNavigate } from "react-router-dom";
 import { PriceCalculator } from "./PriceCalucator";
 import api from "../../token";
+import { useDispatch } from "react-redux";
+import { createUser } from "../../feature/usersSlice";
 
 export const Booking = () => {
-  const { selectedServicesArray } =
-    useSelector((state: RootState) => state.services) ||
-    getFromLocalStorage("selectedServices");
+  const dispatch: AppDispatch = useDispatch();
+  const selectedServicesArray = getFromLocalStorage("selectedServices");
 
-  const currentDay =
-    useSelector((state: RootState) => state.calendar.currentDay) ||
-    getFromLocalStorage("currentDay");
+  let { currentDay, selectedDay, selectedHour } = useSelector(
+    (state: RootState) => state.calendar
+  );
 
-  const selectedDay =
-    useSelector((state: RootState) => state.calendar.selectedDay) ||
-    getFromLocalStorage("selectedDay");
-  const selectedHour =
-    useSelector((state: RootState) => state.calendar.selectedHour) ||
-    getFromLocalStorage("selectedHour");
+  if (!currentDay) {
+    currentDay = getFromLocalStorage("currentDay");
+  }
+  if (!selectedDay) {
+    selectedDay = getFromLocalStorage("selectedDay");
+  }
+  if (!selectedHour) {
+    selectedHour = getFromLocalStorage("selectedHour");
+  }
+
+  const [newHour, setNewHour] = useState(selectedHour); 
+
+  useEffect(() => {
+    if (selectedHour && selectedServicesArray.length > 0) {
+      const [hour, minute] = selectedHour.split(":");
+      for (const { duration } of selectedServicesArray) {
+        const durationInHours = parseInt(duration);
+        const selectedDate = new Date();
+        selectedDate.setHours(Number(hour), Number(minute));
+
+        const newDate = new Date(
+          selectedDate.getTime() + durationInHours * 60 * 60 * 1000
+        );
+        const newHour = `${newDate.getHours()}:${newDate
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}`;
+        setNewHour(newHour);
+      }
+
+    }
+  }, [selectedHour, selectedServicesArray]);
 
   const navigate = useNavigate();
 
@@ -32,52 +58,60 @@ export const Booking = () => {
 
   const displayDay = selectedDay || currentDay;
 
-  const handleClickBook = async ({description, price, duration}) => {
+  const handleBookAndRegister = async (values) => {
     try {
-      const response = await api.post("/createService", {
-        description: description,
-        price: price,
-        duration: duration,
-        day: selectedDay,
-      });
+      await dispatch(createUser(values));
 
-      console.log(response.data);
+      for (const {
+        id,
+        description,
+        price,
+        duration,
+      } of selectedServicesArray) {
+        const response = await api.post("/createService", {
+          description,
+          price,
+          duration,
+          day: selectedDay,
+        });
+        navigate("/user");
+        console.log(response.data);
+      }
     } catch (error) {
       console.error(error);
     }
   };
-// I am here 
+
   return (
     <div>
       <button onClick={handleClickNavigate}>arrow</button>
       <span>{displayDay}</span>
-      <span>{selectedHour}</span>
+      <span>{selectedHour}</span> - <span>{newHour}</span>
       {selectedServicesArray.map(
-        ({ description, category, price, duration }) => (
-          <>
-            <div key={nanoid()}>
-              <span> {description} </span>
-              <span>{category} </span>
-              <span>{price} AMD </span>
-              <span>{duration} hour (s)</span>
-            </div>
-            <button key={nanoid()}
-              onClick={() =>
-                handleClickBook({
-                  description,
-                  price,
-                  duration,
-                  day: selectedDay,
-                })
-              }
-            >
-              Book
-            </button>
-          </>
+        ({
+          id,
+          description,
+          category,
+          price,
+          duration,
+        }: {
+          id: number;
+          description: string;
+          category: string;
+          price: number;
+          duration: string;
+        }) => (
+          <div key={id}>
+            <span>{description}</span>
+            <span>{category}</span>
+            <span>{price} AMD</span>
+            <span>{duration} hour(s)</span>
+          </div>
         )
       )}
+     
       <PriceCalculator />
-      <RegisterForm />
+      <RegisterForm handleBooking={handleBookAndRegister} />
     </div>
   );
 };

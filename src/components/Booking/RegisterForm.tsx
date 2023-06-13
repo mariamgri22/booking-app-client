@@ -1,8 +1,8 @@
+
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { createUser } from "../../feature/usersSlice";
+
 
 interface FormValues {
   username: string;
@@ -14,8 +14,11 @@ interface FormValues {
   comment: string;
 }
 
-const RegisterForm: React.FC = () => {
-  const dispatch = useDispatch();
+interface RegisterFormProps {
+  handleBooking: (values: FormValues, setSubmitting: (isSubmitting: boolean) => void) => void;
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
   const initialValues: FormValues = {
     username: "",
     telephone: "+374",
@@ -32,9 +35,7 @@ const RegisterForm: React.FC = () => {
       .matches(/^\+374/, "Telephone must start with +374")
       .min(8, "Telephone must be at least 8 characters")
       .required("Telephone is required"),
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
+    email: Yup.string().email("Invalid email address").required("Email is required"),
     password: Yup.string()
       .min(6, "Password must be at least 4 characters")
       .max(32, "Password must not exceed 32 characters")
@@ -52,18 +53,12 @@ const RegisterForm: React.FC = () => {
     { label: "Option 3", value: "option3" },
   ];
 
-  const onSubmit = (values, { setSubmitting }) => {
-    dispatch(createUser(values));
-
-    setSubmitting(false);
+  const onSubmit = (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
+    handleBooking(values, setSubmitting);
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}
-    >
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
       {({ isSubmitting }) => (
         <Form>
           <div>
@@ -74,12 +69,7 @@ const RegisterForm: React.FC = () => {
 
           <div>
             <label htmlFor="telephone">Telephone</label>
-            <Field
-              type="text"
-              id="telephone"
-              name="telephone"
-              placeholder="+374"
-            />
+            <Field type="text" id="telephone" name="telephone" placeholder="+374" />
             <ErrorMessage name="telephone" component="div" className="error" />
           </div>
 
@@ -97,16 +87,8 @@ const RegisterForm: React.FC = () => {
 
           <div>
             <label htmlFor="confirmPassword">Confirm Password</label>
-            <Field
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-            />
-            <ErrorMessage
-              name="confirmPassword"
-              component="div"
-              className="error"
-            />
+            <Field type="password" id="confirmPassword" name="confirmPassword" />
+            <ErrorMessage name="confirmPassword" component="div" className="error" />
           </div>
 
           <div>

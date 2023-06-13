@@ -1,15 +1,10 @@
-import { useSelector } from "react-redux";
-
-import { RootState } from "../../store";
 import { getFromLocalStorage } from "../../helpers/localStorageHelper";
 
 export const PriceCalculator = () => {
-  const selectedServicesArray =
-    useSelector((state: RootState) => state.services.selectedServicesArray) ||
-    getFromLocalStorage("selectedServices");
+  const selectedServicesArray = getFromLocalStorage("selectedServices");
 
   const totalPrice = selectedServicesArray.reduce(
-    (total, { price }) => total + price,
+    (total: number, { price }: { price: number }) => total + price,
     0
   );
 

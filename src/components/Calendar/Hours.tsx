@@ -4,14 +4,14 @@ import { setSelectedHour } from "../../feature/calendarSlice";
 
 import "./hours.css";
 import { useDispatch } from "react-redux";
-import { RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 
 export const Hours = () => {
   const { availableHours, selectedHour } = useSelector(
     (state: RootState) => state.calendar
   );
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch:AppDispatch = useDispatch();
 
   const handleHourClick = (hour: string) => {
     dispatch(setSelectedHour(hour));

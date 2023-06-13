@@ -16,6 +16,20 @@ export const createUser = createAsyncThunk(
     }
   }
 );
+export const login = createAsyncThunk(
+  "user/createUser",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await api.post("/login", userData);
+      console.log("🚀 ~ file: usersSlice.ts:12 ~ response:", response);
+      Cookies.set("token", response.data.token, { expires: 7 });
+      return response.data.user;
+    } catch (error:any) {
+      console.log("🚀 ~ file: usersSlice.ts:14 ~ error:", error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const userSlice = createSlice({
   name: "user",

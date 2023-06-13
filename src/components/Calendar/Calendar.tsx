@@ -9,10 +9,10 @@ import {
 } from "../../feature/calendarSlice";
 import renderCalendarDays from "../../helpers/calendarHelper";
 import { Hours } from "./Hours";
-import { RootState } from "../../store";
+import { RootState, AppDispatch } from "../../store";
 
 const Calendar: React.FC<CalendarProps> = ({ startDate, numWeeks }) => {
-  const dispatch = useDispatch();
+  const dispatch : AppDispatch = useDispatch();
 
   const {selectedDay,currentDay, status, error} = useSelector((state: RootState) =>state.calendar);
 
