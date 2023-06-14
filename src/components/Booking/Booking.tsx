@@ -72,6 +72,7 @@ export const Booking = () => {
           description,
           price,
           duration,
+          hour:selectedHour,
           day: selectedDay,
         });
         navigate("/user");

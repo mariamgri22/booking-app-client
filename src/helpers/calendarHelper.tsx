@@ -30,8 +30,8 @@ const renderCalendarDays = (
           className={dayClasses}
           onClick={() => handleDayClick(date)}
         >
+          <span className="calendar-day">{daysOfWeek[date.getDay()]}</span>
           <div className="calendar-date">{date.getDate()}</div>
-          <div className="calendar-day">{daysOfWeek[date.getDay()]}</div>
         </div>
       );
     }

@@ -9,6 +9,7 @@ import { BookingPage } from "./pages/BookingPage";
 import { LoginPage } from "./pages/LoginPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { UserPage } from "./components/UserPage/UserPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const App: React.FC = () => {
   return (
@@ -17,12 +18,13 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<CalendarPage />} />
           <Route path="/services" element={<ServicesPage />} />
-          <Route path="/booking" element={<BookingPage/>} />
-          <Route path="/login" element={<LoginPage/>} />
+          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route
             element={
-              <ProtectedRoute >
-                 <UserPage/>
+              <ProtectedRoute>
+                <UserPage />
               </ProtectedRoute>
             }
             path="/user"

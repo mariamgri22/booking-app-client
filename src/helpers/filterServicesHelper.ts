@@ -1,4 +1,5 @@
-import { Service } from "../feature/servicesSlice";
+import { Service } from "../types/Service";
+
 
 export const filterServicesHelper = (services: Service[], searchQuery: string) => {
   if (!searchQuery || searchQuery.trim() === "") {

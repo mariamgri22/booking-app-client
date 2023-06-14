@@ -2,16 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { getFromLocalStorage } from "../../helpers/localStorageHelper";
-import "./services.css"
-
-interface SingleServiceProps {
-  id: number;
-  description: string;
-  duration: string;
-  price: number;
-  isServiceSelected: (id: number) => boolean;
-  toggleServiceSelection: (id: number) => void;
-}
+import "./services.css";
+import { SingleServiceProps } from "../../types/SingleServiceProps";
 
 export const SingleService: React.FC<SingleServiceProps> = ({
   id,
@@ -38,13 +30,8 @@ export const SingleService: React.FC<SingleServiceProps> = ({
 
     const endTimeInMinutes = totalMinutes + durationInMinutes;
     const endTimeHour = Math.floor(endTimeInMinutes / 60);
-    console.log(
-      "🚀 ~ file: SingleService.tsx:40 ~ isServiceDisabled ~ endTimeHour:",
-      endTimeHour
-    );
     const endTimeMinute = endTimeInMinutes % 60;
 
-    // Check if the service extends beyond midnight (24:00)
     if (endTimeHour >= 24) {
       return true;
     }
@@ -52,13 +39,11 @@ export const SingleService: React.FC<SingleServiceProps> = ({
     return false;
   };
 
-  // Inside the rendering of `SingleService` component
   const disableService = isServiceDisabled();
 
   return (
     <div
       key={id}
-      //   className={`service-item ${isServiceSelected(id) ? "selected" : ""}`}
       className={` ${disableService ? "disabled" : ""} service-item ${
         isServiceSelected(id) ? "selected" : ""
       }`}

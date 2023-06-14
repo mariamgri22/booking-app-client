@@ -1,18 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apiWithoutAuth } from "../apiWithoutAuth";
 import { saveToLocalStorage } from "../helpers/localStorageHelper";
-
-export interface Service {
-  id: number;
-  description: string;
-  price: number;
-  duration: string;
-  category: string;
-}
-
-interface ServicesResponse {
-  services: Service[];
-}
+import { ServicesResponse, ServicesState } from "../types/Service";
 
 const fetchServices = createAsyncThunk("services/fetchServices", async () => {
   const response = await apiWithoutAuth.get<ServicesResponse>("/services");
@@ -20,15 +9,6 @@ const fetchServices = createAsyncThunk("services/fetchServices", async () => {
 
   return response.data;
 });
-
-export interface ServicesState {
-  services: Service[];
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
-  selectedServices: [];
-  selectedServicesArray: Service[];
-  count: number;
-}
 
 const initialState: ServicesState = {
   services: [],

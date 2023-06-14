@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { CalendarProps } from "../../types/CalendarProps";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAvailableHours,
@@ -10,12 +9,14 @@ import {
 import renderCalendarDays from "../../helpers/calendarHelper";
 import { Hours } from "./Hours";
 import { RootState, AppDispatch } from "../../store";
+import { CalendarWrapper } from "./CalendarStyled";
 
 const Calendar: React.FC<CalendarProps> = ({ startDate, numWeeks }) => {
-  const dispatch : AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
-  const {selectedDay,currentDay, status, error} = useSelector((state: RootState) =>state.calendar);
-
+  const { selectedDay, currentDay, status, error } = useSelector(
+    (state: RootState) => state.calendar
+  );
 
   const handleDayClick = async (date: Date) => {
     const formattedDate = date.toISOString().split("T")[0];
@@ -36,7 +37,7 @@ const Calendar: React.FC<CalendarProps> = ({ startDate, numWeeks }) => {
 
   return (
     <>
-      <div className="calendar-container">
+      <CalendarWrapper>
         <div className="calendar-scroll">
           <div className="calendar">
             <div className="calendar-grid">
@@ -51,11 +52,11 @@ const Calendar: React.FC<CalendarProps> = ({ startDate, numWeeks }) => {
             </div>
           </div>
         </div>
-        <div className="hours-container">
-          {status === "loading" && <div>Loading...</div>}
-          {status === "failed" && <div>Error: {error}</div>}
-          {status === "succeeded" && <Hours />}
-        </div>
+      </CalendarWrapper>
+      <div className="hours-container">
+        {status === "loading" && <div>Loading...</div>}
+        {status === "failed" && <div>Error: {error}</div>}
+        {status === "succeeded" && <Hours />}
       </div>
     </>
   );

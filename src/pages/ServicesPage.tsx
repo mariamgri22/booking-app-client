@@ -1,5 +1,6 @@
 import { Services } from "../components/Services/Services";
 import { useSearchParams } from "react-router-dom";
+import left from "./../assets/left.svg";
 
 export const ServicesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -9,21 +10,22 @@ export const ServicesPage = () => {
     setSearchParams({ keyword: query }, { replace: true });
   };
 
-
   return (
     <div>
-      <h1 className="services-title">Services</h1>
-  
+      <div>
+        <img src={left} alt="" />
+        <h3 className="services-title">Services</h3>
+      </div>
+
       <input
         type="text"
         placeholder="Search services..."
         value={searchQuery}
         onChange={(e) => handleSearch(e.target.value)}
       />
-      <div >
+      <div>
         <Services searchQuery={searchQuery} />
       </div>
     </div>
   );
 };
-

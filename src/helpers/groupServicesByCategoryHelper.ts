@@ -1,4 +1,4 @@
-import { Service } from "../feature/servicesSlice";
+import { Service } from "../types/Service";
 
 export const groupServicesByCategoryHelper = (services: Service[] = []) => {
   const groupedServices: { [key: string]: Service[] } = {};

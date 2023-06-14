@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { apiWithoutAuth } from "../apiWithoutAuth";
 import { saveToLocalStorage } from "../helpers/localStorageHelper";
-
-interface AvailableHoursResponse {
-  availableHours: string[][];
-}
+import { AvailableHoursResponse } from "../types/AvailableHoursResponse";
+import { CalendarState } from "../types/CalendarState";
 
 const fetchAvailableHours = createAsyncThunk(
   "calendar/fetchAvailableHours",
@@ -17,15 +15,6 @@ const fetchAvailableHours = createAsyncThunk(
     return response.data.availableHours;
   }
 );
-
-interface CalendarState {
-  availableHours: string[][];
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
-  selectedHour: string | null;
-  selectedDay: string | null;
-  currentDay: string;
-}
 
 const initialState: CalendarState = {
   availableHours: [],

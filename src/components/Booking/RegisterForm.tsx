@@ -1,22 +1,7 @@
-
 import React from "react";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
-
-
-interface FormValues {
-  username: string;
-  telephone: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  reminder: string;
-  comment: string;
-}
-
-interface RegisterFormProps {
-  handleBooking: (values: FormValues, setSubmitting: (isSubmitting: boolean) => void) => void;
-}
+import { FormValues, RegisterFormProps } from "../../types/FormValues";
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
   const initialValues: FormValues = {
@@ -35,7 +20,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
       .matches(/^\+374/, "Telephone must start with +374")
       .min(8, "Telephone must be at least 8 characters")
       .required("Telephone is required"),
-    email: Yup.string().email("Invalid email address").required("Email is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
     password: Yup.string()
       .min(6, "Password must be at least 4 characters")
       .max(32, "Password must not exceed 32 characters")
@@ -53,12 +40,19 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
     { label: "Option 3", value: "option3" },
   ];
 
-  const onSubmit = (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
+  const onSubmit = (
+    values: FormValues,
+    { setSubmitting }: FormikHelpers<FormValues>
+  ) => {
     handleBooking(values, setSubmitting);
   };
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
       {({ isSubmitting }) => (
         <Form>
           <div>
@@ -69,7 +63,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
 
           <div>
             <label htmlFor="telephone">Telephone</label>
-            <Field type="text" id="telephone" name="telephone" placeholder="+374" />
+            <Field
+              type="text"
+              id="telephone"
+              name="telephone"
+              placeholder="+374"
+            />
             <ErrorMessage name="telephone" component="div" className="error" />
           </div>
 
@@ -87,8 +86,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
 
           <div>
             <label htmlFor="confirmPassword">Confirm Password</label>
-            <Field type="password" id="confirmPassword" name="confirmPassword" />
-            <ErrorMessage name="confirmPassword" component="div" className="error" />
+            <Field
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+            />
+            <ErrorMessage
+              name="confirmPassword"
+              component="div"
+              className="error"
+            />
           </div>
 
           <div>

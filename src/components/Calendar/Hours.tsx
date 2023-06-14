@@ -1,17 +1,18 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setSelectedHour } from "../../feature/calendarSlice";
 
-import "./hours.css";
+import { setSelectedHour } from "../../feature/calendarSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
+import { HourWrapper } from "./CalendarStyled";
+import { SingleHour } from "./SingleHour";
 
 export const Hours = () => {
   const { availableHours, selectedHour } = useSelector(
     (state: RootState) => state.calendar
   );
   const navigate = useNavigate();
-  const dispatch:AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const handleHourClick = (hour: string) => {
     dispatch(setSelectedHour(hour));
@@ -24,8 +25,7 @@ export const Hours = () => {
   };
 
   return (
-    <div>
-      <h2 className="hours-title">Available Hours</h2>
+    <HourWrapper>
       {availableHours.map((hours, index) => (
         <div key={index}>
           <div>
@@ -37,15 +37,12 @@ export const Hours = () => {
                   return splitHour >= "10" && splitHour < "12";
                 })
                 .map((hour, index) => (
-                  <button
-                    key={index}
-                    className={`hour-button ${
-                      isHourSelected(hour) ? "selected" : ""
-                    }`}
-                    onClick={() => handleHourClick(hour)}
-                  >
-                    {hour}
-                  </button>
+                  <SingleHour
+                    hour={hour}
+                    index={index}
+                    handleHourClick={handleHourClick}
+                    isHourSelected={isHourSelected}
+                  />
                 ))}
             </div>
           </div>
@@ -58,15 +55,12 @@ export const Hours = () => {
                   return splitHour >= "12" && splitHour < "18";
                 })
                 .map((hour, index) => (
-                  <button
-                    key={index}
-                    className={`hour-button ${
-                      isHourSelected(hour) ? "selected" : ""
-                    }`}
-                    onClick={() => handleHourClick(hour)}
-                  >
-                    {hour}
-                  </button>
+                  <SingleHour
+                    hour={hour}
+                    index={index}
+                    handleHourClick={handleHourClick}
+                    isHourSelected={isHourSelected}
+                  />
                 ))}
             </div>
           </div>
@@ -79,15 +73,12 @@ export const Hours = () => {
                   return splitHour >= "18" && splitHour <= "23";
                 })
                 .map((hour, index) => (
-                  <button
-                    key={index}
-                    className={`hour-button ${
-                      isHourSelected(hour) ? "selected" : ""
-                    }`}
-                    onClick={() => handleHourClick(hour)}
-                  >
-                    {hour}
-                  </button>
+                  <SingleHour
+                    hour={hour}
+                    index={index}
+                    handleHourClick={handleHourClick}
+                    isHourSelected={isHourSelected}
+                  />
                 ))}
             </div>
           </div>
@@ -95,10 +86,9 @@ export const Hours = () => {
       ))}
       {selectedHour && (
         <div className="selected-hour">
-          <p>Selected Hour: {selectedHour}</p>
           <button onClick={handleNavigateService}>Continue</button>
         </div>
       )}
-    </div>
+    </HourWrapper>
   );
 };

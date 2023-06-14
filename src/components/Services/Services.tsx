@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import {
   fetchServices,
-  Service,
+  
   toggleServiceSelectionStore,
 } from "../../feature/servicesSlice";
 import { useNavigate } from "react-router-dom";
@@ -12,10 +12,10 @@ import { categoryToId } from "../../helpers/categoryToId";
 import { groupServicesByCategoryHelper } from "../../helpers/groupServicesByCategoryHelper";
 import { filterServicesHelper } from "../../helpers/filterServicesHelper";
 import { SingleService } from "./SingleService";
+import { ServicesProps } from "../../types/ServicesProps";
+import { Service } from "../../types/Service";
 
-interface ServicesProps {
-  searchQuery: string;
-}
+
 
 export const Services: React.FC<ServicesProps> = ({ searchQuery }) => {
   const { services, count, selectedServices } = useSelector(
@@ -70,6 +70,7 @@ export const Services: React.FC<ServicesProps> = ({ searchQuery }) => {
           </Link>
         ))}
       </div>
+      
       {Object.entries(groupedServicesByCategory).map(
         ([category, services], index) => (
           <div key={category} ref={categoryRefs.current[index]}>

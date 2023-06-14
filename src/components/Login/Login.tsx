@@ -4,15 +4,13 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { login } from "../../feature/usersSlice";
 import { AppDispatch } from "../../store";
+import { FormLoginValues } from "../../types/FormValues";
 
-interface FormValues {
-  email: string;
-  password: string;
-}
+
 
 const LoginForm: React.FC = () => {
   const dispatch:AppDispatch = useDispatch();
-  const initialValues: FormValues = {
+  const initialValues: FormLoginValues = {
     email: "",
     password: "",
   };
