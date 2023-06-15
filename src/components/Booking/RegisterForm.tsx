@@ -1,9 +1,27 @@
-import React from "react";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import React, { useState } from "react";
+import { Formik, FormikHelpers } from "formik";
+import {
+  Error,
+  FormContainer,
+  FormGroup,
+  Input,
+  Label,
+  SubmitButton,
+  TextArea,
+  InputContainer,
+  ShowPasswordButton,
+} from "../Login/FormStyled";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import * as Yup from "yup";
 import { FormValues, RegisterFormProps } from "../../types/FormValues";
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const initialValues: FormValues = {
     username: "",
     telephone: "+374",
@@ -35,9 +53,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
   });
 
   const reminderOptions = [
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
+    { label: "Per 1 hour", value: "option1" },
+    { label: "Per 2 hours", value: "option2" },
+    { label: "Per 3 hours", value: "option3" },
   ];
 
   const onSubmit = (
@@ -54,53 +72,66 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
       onSubmit={onSubmit}
     >
       {({ isSubmitting }) => (
-        <Form>
-          <div>
-            <label htmlFor="username">Username</label>
-            <Field type="text" id="username" name="username" />
-            <ErrorMessage name="username" component="div" className="error" />
-          </div>
+        <FormContainer>
+          <FormGroup>
+            <Label htmlFor="username">Username</Label>
+            <Input type="text" id="username" name="username" />
+            <Error name="username" component="div" className="error" />
+          </FormGroup>
 
-          <div>
-            <label htmlFor="telephone">Telephone</label>
-            <Field
+          <FormGroup>
+            <Label htmlFor="telephone">Telephone</Label>
+            <Input
               type="text"
               id="telephone"
               name="telephone"
               placeholder="+374"
             />
-            <ErrorMessage name="telephone" component="div" className="error" />
-          </div>
+            <Error name="telephone" component="div" className="error" />
+          </FormGroup>
 
-          <div>
-            <label htmlFor="email">Email</label>
-            <Field type="email" id="email" name="email" />
-            <ErrorMessage name="email" component="div" className="error" />
-          </div>
+          <FormGroup>
+            <Label htmlFor="email">Email</Label>
+            <Input type="email" id="email" name="email" />
+            <Error name="email" component="div" className="error" />
+          </FormGroup>
 
-          <div>
-            <label htmlFor="password">Password</label>
-            <Field type="password" id="password" name="password" />
-            <ErrorMessage name="password" component="div" className="error" />
-          </div>
+          <FormGroup>
+            <Label htmlFor="password">Password</Label>
+            <InputContainer>
+              <Input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+              />
+              <ShowPasswordButton
+                type="button"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </ShowPasswordButton>
+            </InputContainer>
+            <Error name="password" component="div" className="error" />
+          </FormGroup>
 
-          <div>
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <Field
+          <FormGroup>
+            <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <Input
               type="password"
               id="confirmPassword"
               name="confirmPassword"
             />
-            <ErrorMessage
-              name="confirmPassword"
-              component="div"
-              className="error"
-            />
-          </div>
+            <Error name="confirmPassword" component="div" className="error" />
+          </FormGroup>
 
-          <div>
-            <label htmlFor="reminder">Reminder</label>
-            <Field as="select" id="reminder" name="reminder">
+          <FormGroup>
+            <Label htmlFor="reminder">Reminder</Label>
+            <Input
+              as="select"
+              id="reminder"
+              name="reminder"
+              style={{ width: "100%" }}
+            >
               <option value="" disabled>
                 Select a reminder
               </option>
@@ -109,20 +140,20 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
                   {option.label}
                 </option>
               ))}
-            </Field>
-            <ErrorMessage name="reminder" component="div" className="error" />
-          </div>
+            </Input>
+            <Error name="reminder" component="div" className="error" />
+          </FormGroup>
 
-          <div>
-            <label htmlFor="comment">Comment</label>
-            <Field as="textarea" id="comment" name="comment" />
-            <ErrorMessage name="comment" component="div" className="error" />
-          </div>
+          <FormGroup>
+            <Label htmlFor="comment">Comment</Label>
+            <TextArea as="textarea" id="comment" name="comment" />
+            <Error name="comment" component="div" className="error" />
+          </FormGroup>
 
-          <button type="submit" disabled={isSubmitting}>
+          <SubmitButton type="submit" disabled={isSubmitting}>
             Submit
-          </button>
-        </Form>
+          </SubmitButton>
+        </FormContainer>
       )}
     </Formik>
   );

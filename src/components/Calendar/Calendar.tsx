@@ -14,7 +14,7 @@ import { CalendarWrapper } from "./CalendarStyled";
 const Calendar: React.FC<CalendarProps> = ({ startDate, numWeeks }) => {
   const dispatch: AppDispatch = useDispatch();
 
-  const { selectedDay, currentDay, status, error } = useSelector(
+  const { selectedDay, currentDay, status } = useSelector(
     (state: RootState) => state.calendar
   );
 
@@ -54,8 +54,12 @@ const Calendar: React.FC<CalendarProps> = ({ startDate, numWeeks }) => {
         </div>
       </CalendarWrapper>
       <div className="hours-container">
-        {status === "loading" && <div>Loading...</div>}
-        {status === "failed" && <div>Error: {error}</div>}
+        {status === "loading" && (
+          <div>
+            <span className="loader"></span>
+          </div>
+        )}
+        {status === "failed" && <div>Not Available hours</div>}
         {status === "succeeded" && <Hours />}
       </div>
     </>

@@ -1,77 +1,56 @@
 #root {
-  max-width: 880px;
+  width: 880px;
   margin: 0 auto;
   text-align: center;
   background-color: #fff;
-
- }
-/*.calendar-container {
-  padding: 20px;
+}
+@media (max-width: 880px) {
+  #root {
+    width: 100%;
+  }
 }
 
-.calendar-scroll {
-  overflow-y: auto;
-  padding: 10px;
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  position: relative;
+  animation: pulse 1s linear infinite;
+}
+.loader:after {
+  content: "";
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: scaleUp 1s linear infinite;
 }
 
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
+@keyframes scaleUp {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  60%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
-
-.calendar-cell {
-  padding: 10px;
+@keyframes pulse {
+  0%,
+  60%,
+  100% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1.2);
+  }
 }
-
-.calendar-week {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-}
-
-.calendar-date {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.calendar-day {
-  margin-top: 4px;
-  font-size: 14px;
-  color: #666;
-}
-
-.current-day {
-  background-color: #e6e6e6;
-}
-
-.time-slots {
-  display: flex;
-  flex-direction: column;
-}
-
-
-.hour-buttons.show {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.hour-buttons button {
-  background-color: #ccc;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.hour-buttons button:hover {
-  background-color: #aaa;
-}
-
-.hour-buttons button.active {
-  background-color: #ff0000;
-  color: #fff;
-} */

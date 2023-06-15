@@ -19,7 +19,6 @@ export const ProfilePageStyled = styled.div`
   flex-direction: column;
   justify-content:center;
   height:100vh;
-  width: 880px;
  
   background: #f2f2f2;
 
@@ -33,7 +32,7 @@ export const ProfilePageStyled = styled.div`
         cursor:pointer;
       }
       h3{
-        margin-left: 14rem;
+       margin: 0 auto;
       }
     }
     padding:20px; 
@@ -81,7 +80,15 @@ export const ProfilePageStyled = styled.div`
   >
 `;
 
-
-export const ServicePageStyled=styled.div`
-   
-`
+export const ServicePageStyled = styled.div`
+  display: flex;
+  padding: 20px;
+  img {
+    width: 24px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  h3 {
+    margin: 0 auto;
+  }
+`;

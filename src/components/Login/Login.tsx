@@ -1,15 +1,36 @@
-import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import React, { useState } from "react";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { login } from "../../feature/usersSlice";
 import { AppDispatch } from "../../store";
 import { FormLoginValues } from "../../types/FormValues";
-
-
+import {
+  Error,
+  FormContainer,
+  FormGroup,
+  Input,
+  Label,
+  SubmitButton,
+  InputContainer,
+  ShowPasswordButton,
+} from "./FormStyled";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
-  const dispatch:AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleNavigateUser = () => {
+    navigate("/user");
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const initialValues: FormLoginValues = {
     email: "",
     password: "",
@@ -37,23 +58,39 @@ const LoginForm: React.FC = () => {
       onSubmit={onSubmit}
     >
       {({ isSubmitting }) => (
-        <Form>
-          <div>
-            <label htmlFor="email">Email</label>
-            <Field type="email" id="email" name="email" />
-            <ErrorMessage name="email" component="div" className="error" />
-          </div>
+        <FormContainer>
+          <FormGroup>
+            <Label htmlFor="email">Email</Label>
+            <Input type="email" id="email" name="email" />
+            <Error name="email" component="div" className="error" />
+          </FormGroup>
 
-          <div>
-            <label htmlFor="password">Password</label>
-            <Field type="password" id="password" name="password" />
-            <ErrorMessage name="password" component="div" className="error" />
-          </div>
+          <FormGroup>
+            <Label htmlFor="password">Password</Label>
+            <InputContainer>
+              <Input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+              />
+              <ShowPasswordButton
+                type="button"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </ShowPasswordButton>
+            </InputContainer>
+            <Error name="password" component="div" className="error" />
+          </FormGroup>
 
-          <button type="submit" disabled={isSubmitting}>
+          <SubmitButton
+            onClick={handleNavigateUser}
+            type="submit"
+            disabled={isSubmitting}
+          >
             Submit
-          </button>
-        </Form>
+          </SubmitButton>
+        </FormContainer>
       )}
     </Formik>
   );

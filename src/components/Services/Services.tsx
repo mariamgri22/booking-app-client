@@ -1,27 +1,30 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import {
   fetchServices,
-  
   toggleServiceSelectionStore,
 } from "../../feature/servicesSlice";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-scroll";
 import { categoryToId } from "../../helpers/categoryToId";
 import { groupServicesByCategoryHelper } from "../../helpers/groupServicesByCategoryHelper";
 import { filterServicesHelper } from "../../helpers/filterServicesHelper";
 import { SingleService } from "./SingleService";
-import { ServicesProps } from "../../types/ServicesProps";
 import { Service } from "../../types/Service";
+import { useSearchParams } from "react-router-dom";
+import { NavLinks, ServicesContainer } from "./StyledService";
+import search from '../../assets/search.svg'
 
-
-
-export const Services: React.FC<ServicesProps> = ({ searchQuery }) => {
+export const Services: React.FC = () => {
   const { services, count, selectedServices } = useSelector(
     (state: RootState) => state.services
   );
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get("keyword") || "";
 
+  const handleSearch = (query: string) => {
+    setSearchParams({ keyword: query }, { replace: true });
+  };
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const categoryRefs = useRef<React.RefObject<HTMLDivElement>[]>([]);
@@ -57,24 +60,33 @@ export const Services: React.FC<ServicesProps> = ({ searchQuery }) => {
   }, [groupedServicesByCategory]);
 
   return (
-    <div className="services-container">
+    <ServicesContainer>
       <div className="category-links">
-        {Object.keys(groupedServicesByCategory).map((category) => (
-          <Link
-            key={category}
-            to={categoryToId(category)}
-            smooth={true}
-            duration={500}
-          >
-            {category}
-          </Link>
-        ))}
+        {Object.keys(groupedServicesByCategory).map((category) => {
+          const linkId = categoryToId(category);
+          return (
+            <NavLinks key={category} to={linkId} smooth={true} duration={500}>
+              {category}
+            </NavLinks>
+          );
+        })}
       </div>
-      
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search services..."
+          value={searchQuery}
+          onChange={(e) => handleSearch(e.target.value)}
+          className="search-input"
+        />
+        <span className="search-icon">
+          <img src={search} alt=""/>
+        </span>
+      </div>
       {Object.entries(groupedServicesByCategory).map(
         ([category, services], index) => (
           <div key={category} ref={categoryRefs.current[index]}>
-            <h1 id={categoryToId(category)}>{category}</h1>
+            <h3 id={categoryToId(category)}>{category}</h3>
             <div>
               {services.map((service: Service) => (
                 <SingleService
@@ -93,6 +105,6 @@ export const Services: React.FC<ServicesProps> = ({ searchQuery }) => {
           <button onClick={handleNavigateCheckout}>Continue {count}</button>
         </div>
       )}
-    </div>
+    </ServicesContainer>
   );
 };

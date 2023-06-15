@@ -1,31 +1,34 @@
+import { useNavigate } from "react-router-dom";
 import { Services } from "../components/Services/Services";
-import { useSearchParams } from "react-router-dom";
 import left from "./../assets/left.svg";
+import { ServicePageStyled } from "./StyledPages";
+import { AppDispatch } from "../store";
+import { useDispatch } from "react-redux";
+import { setCount, setSelectedArrayNull, setSelectedNull } from "../feature/servicesSlice";
 
-export const ServicesPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchQuery = searchParams.get("keyword") || "";
+ const ServicesPage = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSearch = (query: string) => {
-    setSearchParams({ keyword: query }, { replace: true });
+  const handleNavigateHome = () => {
+    localStorage.removeItem("selectedServices");
+    dispatch(setSelectedArrayNull());
+    dispatch(setSelectedNull())
+    dispatch(setCount());
+    navigate("/");
   };
-
   return (
     <div>
-      <div>
-        <img src={left} alt="" />
+      <ServicePageStyled>
+        <img onClick={handleNavigateHome} src={left} alt="" />
         <h3 className="services-title">Services</h3>
-      </div>
+      </ServicePageStyled>
 
-      <input
-        type="text"
-        placeholder="Search services..."
-        value={searchQuery}
-        onChange={(e) => handleSearch(e.target.value)}
-      />
       <div>
-        <Services searchQuery={searchQuery} />
+        <Services />
       </div>
     </div>
   );
 };
+
+export default ServicesPage;

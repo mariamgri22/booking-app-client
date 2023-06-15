@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { getFromLocalStorage } from "../../helpers/localStorageHelper";
-import "./services.css";
 import { SingleServiceProps } from "../../types/SingleServiceProps";
 
 export const SingleService: React.FC<SingleServiceProps> = ({
@@ -13,11 +12,10 @@ export const SingleService: React.FC<SingleServiceProps> = ({
   isServiceSelected,
   toggleServiceSelection,
 }) => {
-  const { selectedHour } =
-    useSelector((state: RootState) => state.calendar) ||
+  const selectedHour =
+    useSelector((state: RootState) => state.calendar.selectedHour) ||
     getFromLocalStorage("selectedHour");
 
-  // Inside the `SingleService` component
   const isServiceDisabled = () => {
     const selectedHourParts = selectedHour.split(":");
     const selectedHourNumber = parseInt(selectedHourParts[0]);
@@ -30,7 +28,7 @@ export const SingleService: React.FC<SingleServiceProps> = ({
 
     const endTimeInMinutes = totalMinutes + durationInMinutes;
     const endTimeHour = Math.floor(endTimeInMinutes / 60);
-    const endTimeMinute = endTimeInMinutes % 60;
+   
 
     if (endTimeHour >= 24) {
       return true;
@@ -50,13 +48,19 @@ export const SingleService: React.FC<SingleServiceProps> = ({
       onClick={() => toggleServiceSelection(id)}
     >
       <div className="service-info">
-        <div className="service-description">Description: {description}</div>
-        <div className="service-duration">Duration: {duration} hour(s)</div>
-        <div className="service-price">Price: ${price}</div>
+        <div>
+          <div>
+            <div className="service-description"> {description}</div>
+
+            <div className="service-duration"> {duration} hour(s)</div>
+          </div>
+          <div className="service-price"> {price} AMD</div>
+        </div>
       </div>
-      <button className="service-toggle">
-        {isServiceSelected(id) ? "-" : "+"}
-      </button>
+
+      <span className="service-toggle">
+        <button>{isServiceSelected(id) ? "-" : "+"}</button>
+      </span>
     </div>
   );
 };

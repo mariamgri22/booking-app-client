@@ -46,6 +46,15 @@ const servicesSlice = createSlice({
         }
       }
     },
+    setCount: (state) => {
+      state.count = 0;
+    },
+    setSelectedArrayNull:(state)=>{
+      state.selectedServicesArray=[]
+    },
+    setSelectedNull:(state)=>{
+      state.selectedServices=[]
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -64,6 +73,6 @@ const servicesSlice = createSlice({
 });
 
 export { fetchServices };
-export const { toggleServiceSelectionStore } = servicesSlice.actions;
+export const { toggleServiceSelectionStore, setCount, setSelectedArrayNull, setSelectedNull } = servicesSlice.actions;
 
 export default servicesSlice.reducer;

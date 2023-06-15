@@ -14,16 +14,16 @@ export const CalendarWrapper = styled.div`
     }
 
     ::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      background: #fff;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #000;
-      border-radius: 8px;
+      background: #fff;
+      border-radius: 10px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: #555;
+      background: rgb(225, 224, 224);
     }
     > div {
       display: grid;
@@ -71,20 +71,24 @@ export const HourWrapper = styled.div`
       border-color: #675f5f94;
       padding: 20px;
       margin: 10px;
+
       h3 {
         font-size: 16px;
         font-weight: 500;
         text-transform: uppercase;
       }
+
       img {
         width: 24px;
         height: 24px;
       }
     }
+
     .button-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 10px;
+
       .hour-button {
         display: block;
         width: 100%;
@@ -95,17 +99,20 @@ export const HourWrapper = styled.div`
         color: #333;
         cursor: pointer;
       }
+
       .selected {
         background-color: #000;
         color: #fff;
       }
     }
   }
+
   .selected-hour {
     position: sticky;
     bottom: 0;
     z-index: 1;
     padding: 2rem 0 0 0;
+
     button {
       background-color: black;
       width: 100%;
@@ -114,6 +121,66 @@ export const HourWrapper = styled.div`
       border-radius: 20px;
       color: #fff;
       cursor: pointer;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+
+    > div {
+      > div {
+        padding: 10px;
+        margin: 5px;
+
+        h3 {
+          font-size: 14px;
+        }
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .button-container {
+        .hour-button {
+          padding: 14px;
+        }
+      }
+    }
+
+    .selected-hour {
+      padding: 1rem 0 0 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 5px;
+
+    > div {
+      > div {
+        padding: 5px;
+        margin: 2px;
+
+        h3 {
+          font-size: 12px;
+        }
+
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      .button-container {
+        .hour-button {
+          padding: 10px;
+        }
+      }
+    }
+
+    .selected-hour {
+      padding: 0.5rem 0 0 0;
     }
   }
 `;

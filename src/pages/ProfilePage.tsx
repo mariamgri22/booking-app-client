@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const ProfilePage: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("");
-
   const handleLanguageChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedLanguage(event.target.value);
   };
@@ -15,7 +14,9 @@ const ProfilePage: React.FC = () => {
   const handleNavigateHome = () => {
     navigate("/");
   };
-
+  const handleToggle = () => {
+    navigate("/login")
+  };
   return (
     <ProfilePageStyled>
       <div>
@@ -29,7 +30,8 @@ const ProfilePage: React.FC = () => {
           <option value="arm">Armenian</option>
           <option value="ru">Russian</option>
         </select>
-        <button>Login</button>
+        <button onClick={handleToggle}>Login</button>
+      
       </div>
       <div>
         <button>New Book</button>
