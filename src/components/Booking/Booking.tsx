@@ -67,7 +67,7 @@ export const Booking = () => {
         price,
         duration,
       } of selectedServicesArray) {
-        await api.post("/createService", {
+       const response= await api.post("/createService", {
           description,
           price,
           duration,
@@ -89,7 +89,7 @@ export const Booking = () => {
         price,
         duration,
       } of selectedServicesArray) {
-        await api.post("/createService", {
+       const response= await api.post("/createService", {
           description,
           price,
           duration,

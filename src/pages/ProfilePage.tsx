@@ -15,8 +15,9 @@ const ProfilePage: React.FC = () => {
     navigate("/");
   };
   const handleToggle = () => {
-    navigate("/login")
+    navigate("/login");
   };
+
   return (
     <ProfilePageStyled>
       <div>
@@ -28,13 +29,12 @@ const ProfilePage: React.FC = () => {
           <option value="">Select Language</option>
           <option value="en">English</option>
           <option value="arm">Armenian</option>
-          <option value="ru">Russian</option>
+        
         </select>
         <button onClick={handleToggle}>Login</button>
-      
       </div>
       <div>
-        <button>New Book</button>
+        <button onClick={handleNavigateHome}>New Book</button>
       </div>
     </ProfilePageStyled>
   );

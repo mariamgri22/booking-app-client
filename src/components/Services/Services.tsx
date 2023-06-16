@@ -12,8 +12,10 @@ import { filterServicesHelper } from "../../helpers/filterServicesHelper";
 import { SingleService } from "./SingleService";
 import { Service } from "../../types/Service";
 import { useSearchParams } from "react-router-dom";
-import { NavLinks, ServicesContainer } from "./StyledService";
-import search from '../../assets/search.svg'
+import { ServicesContainer } from "./StyledService";
+import search from "../../assets/search.svg";
+import Search from "./Search";
+import Category from "./Category";
 
 export const Services: React.FC = () => {
   const { services, count, selectedServices } = useSelector(
@@ -61,28 +63,15 @@ export const Services: React.FC = () => {
 
   return (
     <ServicesContainer>
-      <div className="category-links">
-        {Object.keys(groupedServicesByCategory).map((category) => {
-          const linkId = categoryToId(category);
-          return (
-            <NavLinks key={category} to={linkId} smooth={true} duration={500}>
-              {category}
-            </NavLinks>
-          );
-        })}
-      </div>
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search services..."
-          value={searchQuery}
-          onChange={(e) => handleSearch(e.target.value)}
-          className="search-input"
-        />
-        <span className="search-icon">
-          <img src={search} alt=""/>
-        </span>
-      </div>
+      <Category
+        groupedServicesByCategory={groupedServicesByCategory}
+        categoryToId={categoryToId}
+      />
+      <Search
+        search={search}
+        searchQuery={searchQuery}
+        handleSearch={handleSearch}
+      />
       {Object.entries(groupedServicesByCategory).map(
         ([category, services], index) => (
           <div key={category} ref={categoryRefs.current[index]}>

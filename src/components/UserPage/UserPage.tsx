@@ -9,6 +9,7 @@ import {
   setSelectedArrayNull,
   setSelectedNull,
 } from "../../feature/servicesSlice";
+import { BiLogOut } from "react-icons/bi";
 
 const UserPage = () => {
   const navigate = useNavigate();
@@ -32,9 +33,12 @@ const UserPage = () => {
       <ServicePageStyled>
         <img onClick={handleNavigateProflle} src={left} alt="" />
         <h3>Welcome</h3>
+        <div style={{ cursor: "pointer" }} onClick={handleLogout}>
+          <BiLogOut />
+        </div>
       </ServicePageStyled>
       <hr />
-      <button onClick={handleLogout}>Logout</button>
+      <span>We will be in touch soon</span>
     </>
   );
 };

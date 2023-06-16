@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { login } from "../../feature/usersSlice";
@@ -20,13 +20,10 @@ import { useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleNavigateUser = () => {
-    navigate("/user");
-  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -46,8 +43,9 @@ const LoginForm: React.FC = () => {
       .required("Password is required"),
   });
 
-  const onSubmit = (values, { setSubmitting }) => {
-    dispatch(login(values));
+  const onSubmit = async (values, { setSubmitting }) => {
+    await dispatch(login(values));
+    await navigate("/user");
     setSubmitting(false);
   };
 
@@ -83,11 +81,7 @@ const LoginForm: React.FC = () => {
             <Error name="password" component="div" className="error" />
           </FormGroup>
 
-          <SubmitButton
-            onClick={handleNavigateUser}
-            type="submit"
-            disabled={isSubmitting}
-          >
+          <SubmitButton type="submit" disabled={isSubmitting}>
             Submit
           </SubmitButton>
         </FormContainer>

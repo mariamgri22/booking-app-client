@@ -42,15 +42,16 @@ export const Error = styled(ErrorMessage)`
   color: red;
   margin-top: 5px;
   text-align: start;
-  font-size:14px;
+  font-size: 14px;
 `;
 
 export const SubmitButton = styled.button`
-  background-color: #000;
-  color: white;
-  padding: 10px 20px;
+  background-color: black;
+  width: 100%;
+  padding: 18px;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px;
+  color: #fff;
   cursor: pointer;
 
   &:disabled {
