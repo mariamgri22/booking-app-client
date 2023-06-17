@@ -10,7 +10,7 @@ export const ServicesContainer = styled.div`
     margin-bottom: 10px;
     position: sticky;
     top: 0;
-    background: #fff;
+    background: var(--background-color);
     padding: 10px;
     font-size: 14px;
     font-weight: 500;
