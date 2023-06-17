@@ -5,7 +5,7 @@ import { setSelectedHour } from "../../feature/calendarSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { HourWrapper } from "./CalendarStyled";
-import { SingleHour } from "./SingleHour";
+import  SingleHour  from "./SingleHour";
 
 
 export const Hours = () => {

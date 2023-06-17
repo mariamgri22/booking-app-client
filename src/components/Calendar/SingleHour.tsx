@@ -1,4 +1,18 @@
-export const SingleHour = ({isHourSelected,hour,index,handleHourClick}) => {
+import React from "react";
+
+interface SingleHourProps {
+  isHourSelected: (hour: string) => boolean;
+  hour: string;
+  index: number;
+  handleHourClick: (hour: string) => void;
+}
+
+const SingleHour: React.FC<SingleHourProps> = ({
+  isHourSelected,
+  hour,
+  index,
+  handleHourClick,
+}) => {
   return (
     <>
       <button
@@ -11,3 +25,5 @@ export const SingleHour = ({isHourSelected,hour,index,handleHourClick}) => {
     </>
   );
 };
+
+export default SingleHour;

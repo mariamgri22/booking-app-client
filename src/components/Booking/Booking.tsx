@@ -11,6 +11,7 @@ import { createUser } from "../../feature/usersSlice";
 import { BookingContainer } from "./BookStyled";
 import Cookies from "js-cookie";
 import { SubmitButton } from "../Login/FormStyled";
+import { FormValues } from "../../types/FormValues";
 
 export const Booking = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -57,17 +58,16 @@ export const Booking = () => {
 
   const displayDay = selectedDay || currentDay;
 
-  const handleBookAndRegister = async (values) => {
+  const handleBookAndRegister = async (values:FormValues) => {
     try {
       await dispatch(createUser(values));
 
       for (const {
-        id,
         description,
         price,
         duration,
       } of selectedServicesArray) {
-        const response = await api.post("/createService", {
+         await api.post("/createService", {
           description,
           price,
           duration,
@@ -84,12 +84,11 @@ export const Booking = () => {
   const handleBook = async () => {
     try {
       for (const {
-        id,
         description,
         price,
         duration,
       } of selectedServicesArray) {
-        const response = await api.post("/createService", {
+         await api.post("/createService", {
           description,
           price,
           duration,

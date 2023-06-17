@@ -46,7 +46,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
       .max(32, "Password must not exceed 32 characters")
       .required("Password is required"),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .oneOf([Yup.ref("password"), undefined], "Passwords must match")
       .required("Confirm Password is required"),
     reminder: Yup.string(),
     comment: Yup.string(),

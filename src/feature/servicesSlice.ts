@@ -49,12 +49,12 @@ const servicesSlice = createSlice({
     setCount: (state) => {
       state.count = 0;
     },
-    setSelectedArrayNull:(state)=>{
-      state.selectedServicesArray=[]
+    setSelectedArrayNull: (state) => {
+      state.selectedServicesArray = [];
     },
-    setSelectedNull:(state)=>{
-      state.selectedServices=[]
-    }
+    setSelectedNull: (state) => {
+      state.selectedServices = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -63,16 +63,25 @@ const servicesSlice = createSlice({
       })
       .addCase(fetchServices.fulfilled, (state, action) => {
         state.status = "succeeded";
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         state.services = action.payload;
       })
       .addCase(fetchServices.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.error.message || null;
       });
   },
 });
 
 export { fetchServices };
-export const { toggleServiceSelectionStore, setCount, setSelectedArrayNull, setSelectedNull } = servicesSlice.actions;
+export const {
+  toggleServiceSelectionStore,
+  setCount,
+  setSelectedArrayNull,
+  setSelectedNull,
+} = servicesSlice.actions;
 
 export default servicesSlice.reducer;

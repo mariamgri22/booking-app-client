@@ -1,30 +1,32 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../token";
 import Cookies from "js-cookie";
+import { FormLoginValues, FormValues } from "../types/FormValues";
 
 export const createUser = createAsyncThunk(
   "user/createUser",
-  async (userData, { rejectWithValue }) => {
+  async (values: FormValues, { rejectWithValue }) => {
     try {
-      const response = await api.post("/users", userData);
+      const response = await api.post("/users", values);
       console.log("🚀 ~ file: usersSlice.ts:12 ~ response:", response);
       Cookies.set("token", response.data.token, { expires: 7 });
       return response.data.user;
-    } catch (error:any) {
+    } catch (error: any) {
       console.log("🚀 ~ file: usersSlice.ts:14 ~ error:", error);
       return rejectWithValue(error.response.data);
     }
   }
 );
+
 export const login = createAsyncThunk(
   "user/createUser",
-  async (userData, { rejectWithValue }) => {
+  async (values: FormLoginValues, { rejectWithValue }) => {
     try {
-      const response = await api.post("/login", userData);
+      const response = await api.post("/login", values);
       console.log("🚀 ~ file: usersSlice.ts:12 ~ response:", response);
       Cookies.set("token", response.data.token, { expires: 7 });
       return response.data.user;
-    } catch (error:any) {
+    } catch (error: any) {
       console.log("🚀 ~ file: usersSlice.ts:14 ~ error:", error);
       return rejectWithValue(error.response.data);
     }
@@ -47,10 +49,6 @@ const userSlice = createSlice({
       .addCase(createUser.fulfilled, (state) => {
         state.loading = false;
       })
-      .addCase(createUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
   },
 });
 

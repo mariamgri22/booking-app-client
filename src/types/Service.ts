@@ -14,7 +14,7 @@ export interface ServicesState {
   services: Service[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
-  selectedServices: [];
+  selectedServices: number[];
   selectedServicesArray: Service[];
   count: number;
 }

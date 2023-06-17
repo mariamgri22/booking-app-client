@@ -1,8 +1,8 @@
 const renderCalendarDays = (
   startDate: Date,
   numWeeks: number,
-  currentDay: Date,
-  selectedDay: Date | null,
+  currentDay: string,
+  selectedDay: string | null,
   handleDayClick: (date: Date) => void
 ): JSX.Element[] => {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

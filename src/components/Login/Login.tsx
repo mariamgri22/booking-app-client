@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { login } from "../../feature/usersSlice";
@@ -43,7 +43,10 @@ const LoginForm: React.FC = () => {
       .required("Password is required"),
   });
 
-  const onSubmit = async (values, { setSubmitting }) => {
+  const onSubmit = async (
+    values: FormLoginValues,
+    { setSubmitting }: FormikHelpers<FormLoginValues>
+  ) => {
     await dispatch(login(values));
     await navigate("/user");
     setSubmitting(false);
