@@ -58,11 +58,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
     { label: "Per 3 hours", value: "option3" },
   ];
 
-  const onSubmit = (
+  const onSubmit = async (
     values: FormValues,
     { setSubmitting }: FormikHelpers<FormValues>
   ) => {
-    handleBooking(values, setSubmitting);
+    await handleBooking(values, setSubmitting);
   };
 
   return (

@@ -54,11 +54,7 @@ const Calendar: React.FC<CalendarProps> = ({ startDate, numWeeks }) => {
         </div>
       </CalendarWrapper>
       <div className="hours-container">
-        {status === "loading" && (
-          <div>
-            <span className="loader"></span>
-          </div>
-        )}
+        {status === "loading" && <div>Loading...</div>}
         {status === "failed" && <div>Not Available hours</div>}
         {status === "succeeded" && <Hours />}
       </div>

@@ -6,8 +6,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { HourWrapper } from "./CalendarStyled";
 import { SingleHour } from "./SingleHour";
-import up from "../../assets/up.svg";
-import down from "../../assets/down.svg";
+
 
 export const Hours = () => {
   const [showMorningHours, setShowMorningHours] = useState(true);

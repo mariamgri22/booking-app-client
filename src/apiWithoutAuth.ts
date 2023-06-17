@@ -1,8 +1,7 @@
 import axios from "axios";
 
-
 const apiWithoutAuth = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://booking-api-450n.onrender.com",
 });
 
-export {  apiWithoutAuth };
+export { apiWithoutAuth };
