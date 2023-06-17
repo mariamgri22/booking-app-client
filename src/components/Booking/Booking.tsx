@@ -15,7 +15,9 @@ import { FormValues } from "../../types/FormValues";
 
 export const Booking = () => {
   const dispatch: AppDispatch = useDispatch();
-  const selectedServicesArray = getFromLocalStorage("selectedServices");
+  const selectedServicesArray =
+    useSelector((state: RootState) => state.services.selectedServicesArray) ||
+    getFromLocalStorage("selectedServices");
 
   let { currentDay, selectedDay, selectedHour } = useSelector(
     (state: RootState) => state.calendar
@@ -58,21 +60,17 @@ export const Booking = () => {
 
   const displayDay = selectedDay || currentDay;
 
-  const handleBookAndRegister = async (values:FormValues) => {
+  const handleBookAndRegister = async (values: FormValues) => {
     try {
       await dispatch(createUser(values));
 
-      for (const {
-        description,
-        price,
-        duration,
-      } of selectedServicesArray) {
-         await api.post("/createService", {
+      for (const { description, price, duration } of selectedServicesArray) {
+        await api.post("/createService", {
           description,
           price,
           duration,
           hour: selectedHour,
-          day: selectedDay,
+          day: displayDay,
         });
         navigate("/user");
       }
@@ -83,17 +81,13 @@ export const Booking = () => {
 
   const handleBook = async () => {
     try {
-      for (const {
-        description,
-        price,
-        duration,
-      } of selectedServicesArray) {
-         await api.post("/createService", {
+      for (const { description, price, duration } of selectedServicesArray) {
+        await api.post("/createService", {
           description,
           price,
           duration,
           hour: selectedHour,
-          day: selectedDay,
+          day: displayDay,
         });
         navigate("/user");
       }

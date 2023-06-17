@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const api = axios.create({
-  baseURL: "https://booking-api-450n.onrender.com",
+  baseURL: "https://booking-api-450n.onrender.com"
 });
 
 api.interceptors.request.use((config) => {
