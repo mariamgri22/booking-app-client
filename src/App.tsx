@@ -23,9 +23,9 @@ const App: React.FC = () => {
             element={
               <Suspense
                 fallback={
-                  <>
+                 <div className="centre">
                     <span className="loader"></span>
-                  </>
+                  </div>
                 }
               >
                 <CalendarPage />
@@ -37,9 +37,9 @@ const App: React.FC = () => {
             element={
               <Suspense
                 fallback={
-                  <>
+                 <div className="centre">
                     <span className="loader"></span>
-                  </>
+                  </div>
                 }
               >
                 <ServicesPage />
@@ -51,9 +51,9 @@ const App: React.FC = () => {
             element={
               <Suspense
                 fallback={
-                  <>
+                 <div className="centre">
                     <span className="loader"></span>
-                  </>
+                  </div>
                 }
               >
                 <BookingPage />
@@ -65,9 +65,9 @@ const App: React.FC = () => {
             element={
               <Suspense
                 fallback={
-                  <>
+                 <div className="centre">
                     <span className="loader"></span>
-                  </>
+                  </div>
                 }
               >
                 <ProfilePage />
@@ -79,9 +79,9 @@ const App: React.FC = () => {
             element={
               <Suspense
                 fallback={
-                  <>
+                 <div className="centre">
                     <span className="loader"></span>
-                  </>
+                  </div>
                 }
               >
                 <LoginPage />

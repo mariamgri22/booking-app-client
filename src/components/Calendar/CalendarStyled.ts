@@ -4,7 +4,7 @@ export const CalendarWrapper = styled.div`
   padding: 20px;
   position: sticky;
   top: 0;
-  background: #fff;
+  background: var(--background-color);
   > div > div {
     overflow-y: auto;
     padding: 10px;

@@ -1,19 +1,37 @@
+:root {
+  --background-color: #fff;
+  --text-color: #213547;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #171515 ;
+    --text-color: rgba(255, 255, 255, 0.87);
+  }
+}
+
 #root {
   width: 880px;
   margin: 0 auto;
   text-align: center;
-  background-color: #fff;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
+
 @media (max-width: 880px) {
   #root {
     width: 100%;
   }
 }
 
+
+.centre {
+  place-content: center;
+}
 .loader {
   width: 48px;
   height: 48px;
-  border: 5px solid #fff;
+  border: 5px solid #000;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
@@ -25,7 +43,7 @@
   position: absolute;
   width: 48px;
   height: 48px;
-  border: 5px solid #fff;
+  border: 5px solid #000;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
