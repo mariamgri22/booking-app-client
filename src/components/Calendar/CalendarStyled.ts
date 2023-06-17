@@ -34,6 +34,8 @@ export const CalendarWrapper = styled.div`
         grid-template-columns: repeat(7, 1fr);
         gap: 10px;
         > div {
+          cursor: pointer;
+
           padding: 10px;
 
           > div {
@@ -50,6 +52,7 @@ export const CalendarWrapper = styled.div`
         .current-day {
           background-color: rgb(225 224 224);
           border-radius: 18px;
+          cursor: pointer;
         }
         .selected {
           background-color: #000;
@@ -76,6 +79,7 @@ export const HourWrapper = styled.div`
         font-size: 16px;
         font-weight: 500;
         text-transform: uppercase;
+        cursor: pointer;
       }
 
       img {
@@ -93,7 +97,6 @@ export const HourWrapper = styled.div`
         display: block;
         width: 100%;
         padding: 18px;
-        border-color: #675f5f94;
         background-color: #fff;
         border-radius: 25px;
         color: #333;

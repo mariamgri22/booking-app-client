@@ -42,7 +42,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ handleBooking }) => {
       .email("Invalid email address")
       .required("Email is required"),
     password: Yup.string()
-      .min(6, "Password must be at least 4 characters")
+      .min(6, "Password must be at least 6 characters")
       .max(32, "Password must not exceed 32 characters")
       .required("Password is required"),
     confirmPassword: Yup.string()
