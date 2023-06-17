@@ -5,13 +5,14 @@ import { setSelectedHour } from "../../feature/calendarSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { HourWrapper } from "./CalendarStyled";
-import  SingleHour  from "./SingleHour";
-
+import SingleHour from "./SingleHour";
+import { useTranslation } from "react-i18next";
 
 export const Hours = () => {
   const [showMorningHours, setShowMorningHours] = useState(true);
   const [showDayHours, setShowDayHours] = useState(true);
   const [showEveningHours, setShowEveningHours] = useState(true);
+  const { t } = useTranslation();
 
   const { availableHours, selectedHour } = useSelector(
     (state: RootState) => state.calendar
@@ -35,7 +36,7 @@ export const Hours = () => {
         <div key={index}>
           <div>
             <div onClick={() => setShowMorningHours(!showMorningHours)}>
-              <h3 className="time-period">Morning</h3>
+              <h3 className="time-period">{t("Morning")}</h3>
             </div>
 
             {showMorningHours && (
@@ -61,7 +62,7 @@ export const Hours = () => {
               className="time-period"
               onClick={() => setShowDayHours(!showDayHours)}
             >
-              Day
+              {t("Day")}
             </h3>
             {showDayHours && (
               <div className="button-container">
@@ -86,7 +87,7 @@ export const Hours = () => {
               className="time-period"
               onClick={() => setShowEveningHours(!showEveningHours)}
             >
-              Evening
+              {t("Evening")}
             </h3>
             {showEveningHours && (
               <div className="button-container">
@@ -110,7 +111,7 @@ export const Hours = () => {
       ))}
       {selectedHour && (
         <div className="selected-hour">
-          <button onClick={handleNavigateService}>Continue</button>
+          <button onClick={handleNavigateService}>{t("Continue")}</button>
         </div>
       )}
     </HourWrapper>

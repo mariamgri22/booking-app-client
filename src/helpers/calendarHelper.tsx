@@ -1,11 +1,16 @@
-const renderCalendarDays = (
+import { useTranslation } from 'react-i18next';
+
+const RenderCalendarDays = (
   startDate: Date,
   numWeeks: number,
   currentDay: string,
   selectedDay: string | null,
   handleDayClick: (date: Date) => void
 ): JSX.Element[] => {
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const { t } = useTranslation();
+
+  const daysOfWeek: string[] = t('daysOfWeek', { returnObjects: true });
+
   const weeks: JSX.Element[] = [];
 
   for (let week = 0; week < numWeeks; week++) {
@@ -46,4 +51,4 @@ const renderCalendarDays = (
   return weeks;
 };
 
-export default renderCalendarDays;
+export default RenderCalendarDays;

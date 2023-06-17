@@ -5,10 +5,13 @@ import { ServicePageStyled } from "./StyledPages";
 import { AppDispatch } from "../store";
 import { useDispatch } from "react-redux";
 import { setCount, setSelectedArrayNull, setSelectedNull } from "../feature/servicesSlice";
+import { useTranslation } from "react-i18next";
+
 
  const ServicesPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleNavigateHome = () => {
     localStorage.removeItem("selectedServices");
@@ -21,7 +24,7 @@ import { setCount, setSelectedArrayNull, setSelectedNull } from "../feature/serv
     <div>
       <ServicePageStyled>
         <img onClick={handleNavigateHome} src={left} alt="" />
-        <h3 className="services-title">Services</h3>
+        <h3 className="services-title">{t("Services")}</h3>
       </ServicePageStyled>
 
       <div>

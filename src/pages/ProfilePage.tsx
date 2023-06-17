@@ -1,21 +1,27 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import { ProfilePageStyled } from "./StyledPages";
 import left from "./../assets/left.svg";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ProfilePage: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState("");
-  const handleLanguageChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedLanguage(event.target.value);
-  };
 
   const navigate = useNavigate();
 
   const handleNavigateHome = () => {
     navigate("/");
   };
+
   const handleToggle = () => {
     navigate("/login");
+  };
+
+  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const language = event.target.value;
+    setSelectedLanguage(language);
+    i18n.changeLanguage(language);
   };
 
   return (
@@ -23,21 +29,21 @@ const ProfilePage: React.FC = () => {
       <div>
         <div>
           <img onClick={handleNavigateHome} src={left} alt="" />
-          <h3>Personal account</h3>
+          <h3>{t("PersonalAccount")}</h3>
         </div>
         <select value={selectedLanguage} onChange={handleLanguageChange}>
-          <option value="">Select Language</option>
-          <option value="en">English</option>
-          <option value="arm">Armenian</option>
-        
+          <option value="">{t("SelectLanguage")}</option>
+          <option value="en">{t("English")}</option>
+          <option value="arm">{t("Armenian")}</option>
         </select>
-        <button onClick={handleToggle}>Login</button>
+        <button onClick={handleToggle}>{t("Login")}</button>
       </div>
       <div>
-        <button onClick={handleNavigateHome}>New Book</button>
+        <button onClick={handleNavigateHome}>{t("NewBook")}</button>
       </div>
     </ProfilePageStyled>
   );
 };
 
 export default ProfilePage;
+

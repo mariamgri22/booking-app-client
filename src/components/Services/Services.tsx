@@ -16,6 +16,8 @@ import { ServicesContainer } from "./StyledService";
 import search from "../../assets/search.svg";
 import Search from "./Search";
 import Category from "./Category";
+import { useTranslation } from "react-i18next";
+
 
 export const Services: React.FC = () => {
   const { services, count, selectedServices } = useSelector(
@@ -23,6 +25,9 @@ export const Services: React.FC = () => {
   );
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("keyword") || "";
+
+  const { t } = useTranslation();
+
 
   const handleSearch = (query: string) => {
     setSearchParams({ keyword: query }, { replace: true });
@@ -91,7 +96,7 @@ export const Services: React.FC = () => {
       )}
       {selectedServices.length > 0 && (
         <div className="selected-service">
-          <button onClick={handleNavigateCheckout}>Continue {count}</button>
+          <button onClick={handleNavigateCheckout}>{t("Continue")} {count}</button>
         </div>
       )}
     </ServicesContainer>

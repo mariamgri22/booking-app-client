@@ -2,9 +2,11 @@ import { Booking } from "../components/Booking/Booking";
 import { ServicePageStyled } from "./StyledPages";
 import left from "./../assets/left.svg";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
- const BookingPage = () => {
+const BookingPage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleNavigateService = () => {
     navigate("/services");
@@ -13,7 +15,7 @@ import { useNavigate } from "react-router-dom";
     <div>
       <ServicePageStyled>
         <img onClick={handleNavigateService} src={left} alt="" />
-        <h3>Booking</h3>
+        <h3>{t("Booking")}</h3>
       </ServicePageStyled>
       <hr />
       <Booking />

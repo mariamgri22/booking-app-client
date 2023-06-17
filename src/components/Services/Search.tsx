@@ -1,4 +1,6 @@
 import React, { ChangeEvent } from "react";
+import { useTranslation } from "react-i18next";
+
 
 interface SearchProps {
   search: string;
@@ -14,13 +16,15 @@ const Search: React.FC<SearchProps> = ({
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleSearch(e.target.value);
   };
+  const { t } = useTranslation();
+
 
   return (
     <>
       <div className="search-container">
         <input
           type="text"
-          placeholder="Search services..."
+          placeholder={t("Search services...")}
           value={searchQuery}
           onChange={onInputChange}
           className="search-input"

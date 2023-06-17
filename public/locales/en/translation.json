@@ -1,0 +1,14 @@
+{
+  "daysOfWeek": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  "PersonalAccount": "PersonalAccount",
+  "Login": "Login",
+  "NewBook": "NewBook",
+  "Booking": "Booking",
+  " Bookingapp": " Booking app",
+  "Morning": "Morning",
+  "Day": "Day",
+  "Evening": "Evening",
+  "Continue":"Continue",
+  "Services":"Services",
+  "Search services...":"Search services..."
+}
