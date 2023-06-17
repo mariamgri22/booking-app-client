@@ -16,8 +16,7 @@ import { FormValues } from "../../types/FormValues";
 export const Booking = () => {
   const dispatch: AppDispatch = useDispatch();
   const selectedServicesArray =
-    useSelector((state: RootState) => state.services.selectedServicesArray) ||
-    getFromLocalStorage("selectedServices");
+      getFromLocalStorage("selectedServices");
 
   let { currentDay, selectedDay, selectedHour } = useSelector(
     (state: RootState) => state.calendar
