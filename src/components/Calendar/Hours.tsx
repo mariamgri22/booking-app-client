@@ -14,7 +14,7 @@ export const Hours = () => {
   const [showEveningHours, setShowEveningHours] = useState(true);
   const { t } = useTranslation();
 
-  const { availableHours, selectedHour, currentDay } = useSelector(
+  const { availableHours, selectedHour, currentDay, selectedDay } = useSelector(
     (state: RootState) => state.calendar
   );
   const navigate = useNavigate();
@@ -45,12 +45,17 @@ export const Hours = () => {
               <div className="button-container">
                 {hours
                   .filter((hour) => {
-                    const hourDateTime = new Date(`${currentDay}T${hour}`);
-                    return (
-                      hourDateTime.getHours() >= 10 &&
-                      hourDateTime.getHours() < 12 &&
-                      hourDateTime > currentTime
-                    );
+                    if (!selectedDay) {
+                      const hourDateTime = new Date(`${currentDay}T${hour}`);
+                      return (
+                        hourDateTime.getHours() >= 10 &&
+                        hourDateTime.getHours() < 12 &&
+                        hourDateTime > currentTime
+                      );
+                    } else {
+                      const splitHour = hour.split(":")[0];
+                      return splitHour >= "10" && splitHour < "12";
+                    }
                   })
                   .map((hour, index) => (
                     <SingleHour
@@ -74,12 +79,17 @@ export const Hours = () => {
               <div className="button-container">
                 {hours
                   .filter((hour) => {
-                    const hourDateTime = new Date(`${currentDay}T${hour}`);
-                    return (
-                      hourDateTime.getHours() >= 12 &&
-                      hourDateTime.getHours() < 18 &&
-                      hourDateTime > currentTime
-                    );
+                    if (!selectedDay) {
+                      const hourDateTime = new Date(`${currentDay}T${hour}`);
+                      return (
+                        hourDateTime.getHours() >= 12 &&
+                        hourDateTime.getHours() < 18 &&
+                        hourDateTime > currentTime
+                      );
+                    } else {
+                      const splitHour = hour.split(":")[0];
+                      return splitHour >= "12" && splitHour < "18";
+                    }
                   })
                   .map((hour, index) => (
                     <SingleHour
@@ -103,12 +113,18 @@ export const Hours = () => {
               <div className="button-container">
                 {hours
                   .filter((hour) => {
-                    const hourDateTime = new Date(`${currentDay}T${hour}`);
-                    return (
-                      hourDateTime.getHours() >= 18 &&
-                      hourDateTime.getHours() <= 23 &&
-                      hourDateTime > currentTime
-                    );
+                    if (!selectedDay) {
+                      const hourDateTime = new Date(`${currentDay}T${hour}`);
+
+                      return (
+                        hourDateTime.getHours() >= 18 &&
+                        hourDateTime.getHours() <= 23 &&
+                        hourDateTime > currentTime
+                      );
+                    } else {
+                      const splitHour = hour.split(":")[0];
+                      return splitHour >= "18" && splitHour < "23";
+                    }
                   })
                   .map((hour, index) => (
                     <SingleHour
