@@ -14,7 +14,7 @@ export const Hours = () => {
   const [showEveningHours, setShowEveningHours] = useState(true);
   const { t } = useTranslation();
 
-  const { availableHours, selectedHour } = useSelector(
+  const { availableHours, selectedHour, currentDay } = useSelector(
     (state: RootState) => state.calendar
   );
   const navigate = useNavigate();
@@ -30,6 +30,8 @@ export const Hours = () => {
     navigate("/services");
   };
 
+  const currentTime = new Date();
+
   return (
     <HourWrapper>
       {availableHours.map((hours, index) => (
@@ -43,8 +45,12 @@ export const Hours = () => {
               <div className="button-container">
                 {hours
                   .filter((hour) => {
-                    const splitHour = hour.split(":")[0];
-                    return splitHour >= "10" && splitHour < "12";
+                    const hourDateTime = new Date(`${currentDay}T${hour}`);
+                    return (
+                      hourDateTime.getHours() >= 10 &&
+                      hourDateTime.getHours() < 12 &&
+                      hourDateTime > currentTime
+                    );
                   })
                   .map((hour, index) => (
                     <SingleHour
@@ -68,8 +74,12 @@ export const Hours = () => {
               <div className="button-container">
                 {hours
                   .filter((hour) => {
-                    const splitHour = hour.split(":")[0];
-                    return splitHour >= "12" && splitHour < "18";
+                    const hourDateTime = new Date(`${currentDay}T${hour}`);
+                    return (
+                      hourDateTime.getHours() >= 12 &&
+                      hourDateTime.getHours() < 18 &&
+                      hourDateTime > currentTime
+                    );
                   })
                   .map((hour, index) => (
                     <SingleHour
@@ -93,8 +103,12 @@ export const Hours = () => {
               <div className="button-container">
                 {hours
                   .filter((hour) => {
-                    const splitHour = hour.split(":")[0];
-                    return splitHour >= "18" && splitHour <= "23";
+                    const hourDateTime = new Date(`${currentDay}T${hour}`);
+                    return (
+                      hourDateTime.getHours() >= 18 &&
+                      hourDateTime.getHours() <= 23 &&
+                      hourDateTime > currentTime
+                    );
                   })
                   .map((hour, index) => (
                     <SingleHour
